@@ -1,7 +1,8 @@
 import "./movie-info.css";
-import {json, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import api from "../../services/api";
+import {toast} from "react-toastify";
 
 function Movie() {
 
@@ -41,15 +42,15 @@ function Movie() {
 
         let savedMovies = JSON.parse(myList) || [];
 
-        const hasMovie = savedMovies.some( (savedMovie) => savedMovie.id === movie.id)
+        const hasMovie = savedMovies.some((savedMovie) => savedMovie.id === movie.id)
 
         if (hasMovie) {
-            alert("Esse filme já está na lista");
+            toast.warn("Esse filme já está na sua lista!");
             return;
         } else {
             savedMovies.push(movie);
             localStorage.setItem("@primeflix", JSON.stringify(savedMovies));
-            alert("Filme salvo com sucesso");
+            toast.success("Filme salvo com sucesso!");
         }
     }
 
@@ -72,12 +73,12 @@ function Movie() {
             <div className={'buttons-area'}>
                 <button onClick={saveMovie}>Salvar</button>
                 <button>
-                    <a href={`https://www.youtube.com/results?search_query=movie+${movie.title}+trailer`} target={"blank"} rel={"external"}>
+                    <a href={`https://www.youtube.com/results?search_query=movie+${movie.title}+trailer`}
+                       target={"blank"} rel={"external"}>
                         Trailer
                     </a>
                 </button>
             </div>
-
         </div>
     )
 }
